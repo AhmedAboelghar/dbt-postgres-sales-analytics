@@ -1,15 +1,21 @@
-Welcome to your new dbt project!
+# 📊 End-to-End Analytics Pipeline (dbt + PostgreSQL)
 
-### Using the starter project
+An enterprise-grade Data Engineering pipeline that transforms raw transactional sales data into a cleaned, optimized Star Schema Warehouse using **dbt Core** and **PostgreSQL**, governed by automated Data Quality testing.
 
-Try running the following commands:
-- dbt run
-- dbt test
+---
 
+## 🚀 Project Architecture
+The project isolates raw source mutations from the analytics layer using a multi-tiered environment:
+1. **Source Layer:** Raw transactional schemas (`FACT_Orders`, customer seeds) hosted on PostgreSQL.
+2. **Staging Layer (`models/staging`):** Handles explicit data type casting, column standardizations, and critical data purging.
+3. **Marts Layer (`models/marts/core`):** Models final business entities into fully optimized Fact and Dimension tables ready for BI ingestion (Power BI).
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+---
+
+## 🛠️ Key Data Cleansing & Business Logic
+During development, explicit data profiling caught severe anomalies in the raw dataset. The pipeline resolves them programmatically:
+
+* **Granularity Protection (Deduplication):** Caught duplicate occurrences of transactional `Row ID`s (e.g., Row 4858). Resolved dynamically in `stg_orders.sql` using a window function layout:
+  ```sql
+  row_number() over (partition by "Row ID" order by "Row ID") as row_num
+  
