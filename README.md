@@ -19,3 +19,21 @@ During development, explicit data profiling caught severe anomalies in the raw d
   ```sql
   row_number() over (partition by "Row ID" order by "Row ID") as row_num
   
+🧪 Data Governance & Testing
+Automated testing models were built directly into the core schemas (core_schema.yml) to validate schema compliance on every pipeline run:
+
+unique and not_null tests assigned to primary surrogate keys (customer_key, row_id).
+
+All tests execute automatically via dbt test ensuring 100% data trust.
+
+💻 Tech Stack
+Data Transformation & Modeling: dbt (data build tool) Core
+
+Database Engine: PostgreSQL
+
+SQL Dialect: Postgre-SQL PL/pgSQL
+
+Documentation Hosting: Netlify
+
+🔗 Live Deployments
+Interactive Data Documentation & Lineage DAG: [https://phenomenal-sherbet-73c932.netlify.app/#!/overview?g_v=1]
