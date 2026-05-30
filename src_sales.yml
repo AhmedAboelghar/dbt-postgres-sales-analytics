@@ -1,0 +1,9 @@
+
+version: 2
+
+sources:
+  - name: raw_sales
+    schema: public
+    tables:
+      - name: FACT_Orders
+        identifier: fact_orders
