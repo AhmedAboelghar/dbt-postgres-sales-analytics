@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: dim_customer_final  # <--- اتأكدي إنه مفرد بالظبط زي اسم ملف الـ sql
+    description: "جدول العملاء النهائي يحتوي على البيانات الديموغرافية والجغرافية موحدة"
+    columns:
+      - name: customer_key
+        description: "المفتاح الرئيسي الفريد للعميل"
+        tests:
+          - unique
+          - not_null
+
+  - name: fct_sales
+    description: "جدول الحقائق لجميع عمليات البيع والمقاييس المالية"
+    columns:
+      - name: row_id
+        description: "المفتاح الرئيسي لسطر الطلب"
+        tests:
+          - unique
+          - not_null
+      - name: customer_key
+        description: "مفتاح الربط مع جدول العملاء"
+        tests:
+          - not_null
